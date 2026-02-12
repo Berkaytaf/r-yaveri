@@ -2,10 +2,9 @@ name: Rüyacı Bacı Kütüphane Güncelleyici
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Her gece yarısı çalışır
-  workflow_dispatch: # İstediğinde manuel çalıştırma butonu ekler
+    - cron: '0 0 * * *' 
+  workflow_dispatch: 
 
-# 403 Hatasını çözmek için eklenen yetki alanı
 permissions:
   contents: write
 
@@ -22,13 +21,13 @@ jobs:
 
       - name: Bağımlılıkları Yükle
         run: |
-          # Ekran görüntüsündeki dosyayı kullanması için güncellendi
-          pip install -r gereksinimler.txt 
+          # Gerçek adı muhtemelen requirements.txt
+          pip install -r requirements.txt 
           playwright install chromium
 
       - name: Botu Çalıştır
-        # Ekran görüntüsündeki 'kazıyıcı.py' ismiyle eşleştirildi
-        run: python kazıyıcı.py 
+        # Gerçek adı muhtemelen scraper.py
+        run: python scraper.py 
 
       - name: Verileri Kaydet ve Pushla
         run: |
