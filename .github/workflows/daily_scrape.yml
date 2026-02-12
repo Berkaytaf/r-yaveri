@@ -5,21 +5,31 @@ on:
     - cron: '0 0 * * *' # Her gece yarısı çalışır
   workflow_dispatch: # İstediğinde manuel çalıştırma butonu ekler
 
+# 403 Hatasını çözmek için eklenen yetki alanı
+permissions:
+  contents: write
+
 jobs:
   scrape:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Python Kur
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
+
       - name: Bağımlılıkları Yükle
         run: |
-          pip install playwright
+          # Ekran görüntüsündeki dosyayı kullanması için güncellendi
+          pip install -r gereksinimler.txt 
           playwright install chromium
+
       - name: Botu Çalıştır
-        run: python scraper.py
+        # Ekran görüntüsündeki 'kazıyıcı.py' ismiyle eşleştirildi
+        run: python kazıyıcı.py 
+
       - name: Verileri Kaydet ve Pushla
         run: |
           git config --local user.email "action@github.com"
